@@ -4,18 +4,24 @@ body {
 }
 
 table {
+  display: table;
   border-collapse: collapse;
   width: 100%;
+  margin-top: 20px;
 }
 
 th,
 td {
-  border: 1px solid #ccc;
+  display: table-cell;
+  border: 1px solid #999;
   padding: 10px;
   text-align: left;
 }
 
-img {
-  width: 100px;
-  height: auto;
+th {
+  font-weight: bold;
+}
+
+tr {
+  display: table-row;
 }
