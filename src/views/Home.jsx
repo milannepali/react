@@ -8,8 +8,22 @@ const Home = () => {
   useEffect(() => {
     const getMedia = async () => {
       try {
-        const json = await fetchData('test.json');
-        setMediaArray(json);
+        const json = await fetchData(import.meta.env.VITE_MEDIA_API + '/media');
+
+        const newArray = await Promise.all(
+          json.map(async (item) => {
+            const user = await fetchData(
+              import.meta.env.VITE_AUTH_API + '/users/' + item.user_id,
+            );
+
+            return {
+              ...item,
+              username: user.username,
+            };
+          }),
+        );
+
+        setMediaArray(newArray);
       } catch (error) {
         console.error(error);
       }
@@ -30,6 +44,7 @@ const Home = () => {
             <th>Thumbnail</th>
             <th>Title</th>
             <th>Description</th>
+            <th>Owner</th>
             <th>Created</th>
             <th>Size</th>
             <th>Type</th>
